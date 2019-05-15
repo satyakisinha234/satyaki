@@ -1,0 +1,518 @@
+<!-- *****************************************$root refers to the page that applies ko.applyBindings()***********************-->
+{% load static %}
+<!--<style>-->
+    <!--li:hover {-->
+        <!--background-color:#e6e6e6;-->
+    <!--}-->
+<!--</style>-->
+<nav style="margin-bottom: 0px; position:sticky;top:0px;z-index:999" class="navbar  navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#dvNavBarOption" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <img alt="logo" style="padding: 7px;" class="navbar-brand" src ="{% static 'img/logo.png' %}">
+            <a class="navbar-brand" href="/cadxxx_index/">iPPSO</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div id="dvNavBarOption"  class="collapse navbar-collapse">
+
+            <ul id="nvMainHeader" class="nav navbar-nav">
+                {% if user.is_authenticated %}
+                <li data-bind="click:$root.masterModel.topHeaderClicked.bind($data,'flat_products'),attr:{class:$root.masterModel.topLevelHeader()=='flat_products'?'dropdown dropdown-custom active':'dropdown dropdown-custom'}" class="dropdown dropdown-custom active">
+                    <a href="/flatrolled/">Flat Rolled Products</a>
+
+                </li>
+                <li  data-bind="click:$root.masterModel.topHeaderClicked.bind($data,'extrusions'),attr:{class:$root.masterModel.topLevelHeader()=='extrusions'?'active':''}"><a href="/extrusion/">Extrusions</a></li>
+                <!--<li data-bind="click:$root.masterModel.topHeaderClicked.bind($data,'forgings'),attr:{class:$root.masterModel.topLevelHeader()=='forgings'?'active':''}"><a href="#">Forgings</a></li> -->
+                <li data-bind="click:$root.masterModel.topHeaderClicked.bind($data,'castings'),attr:{class:$root.masterModel.topLevelHeader()=='castings'?'active':''}"><a href="/fluxing/">Castings</a></li>
+                <li data-bind="click:$root.masterModel.topHeaderClicked.bind($data,'materials'),attr:{class:$root.masterModel.topLevelHeader()=='materials'?'active':''}">
+                    <a  href="/materials/">
+
+                        Materials
+
+                    </a>
+                </li>
+                <li data-bind="click:$root.masterModel.topHeaderClicked.bind($data,'toolbox'),attr:{class:$root.masterModel.topLevelHeader()=='toolbox'?'active':''}">
+                    <a  href="/spraydesign/">
+
+                        ToolBox
+
+                    </a>
+                </li>
+                <li data-bind="click:$root.masterModel.topHeaderClicked.bind($data,'multisim'),attr:{class:$root.masterModel.topLevelHeader()=='multisim'?'active':''}">
+                    <a  href="/multisim/">
+                        Multi-Sim
+                    </a>
+                </li>
+                {% endif %}
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                <!--<li><span class="glyphicon glyphicon-bell" style="color:white;padding-top: 23px"><span class="badge" style="color:red"></span></span></li>-->
+                <li role="button" aria-haspopup="true" aria-expanded="false" class="notification" id='notify'  data-toggle="modal" data-target="#notificationModal" ></li>
+                <li><a role="button" aria-haspopup="true" aria-expanded="false" href="/accounts/edit_user_details/"><b>Welcome, {{ user.username }}</b></a>
+                </li>
+                <li><a href="{% url 'logout' %}">Log out</a></li>
+
+                <!-- ko ifnot: $root.isSpraydesign -->
+                <li class="dropdown" ><a class="dropdown-toggle" data-toggle="dropdown"  href="#">Help<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/discussion/">Discussion Board</a></li>
+                        <!-- ko if: $root.testPlateHelp -->
+                        <li><a href="/platestretch/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testCoilHelp -->
+                        <li><a href="/coilthermal/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testRollHelp -->
+                        <li><a href="/rollingmill/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testBatchFurnaceHelp -->
+                        <li><a href="/batchfurnace/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testQuenchHelp -->
+                        <li><a href="/continuousquench/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testQuenchPlateHelp -->
+                        <li><a href="/continuousquenchplate/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testQuenchCCurveHelp -->
+                        <li><a href="/continuousquenchccurve/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testFurnaceHelp -->
+                        <li><a href="/furnace/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testFurnacePusherHelp -->
+                        <li><a href="/furnacepusher/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testAlshapeHelp -->
+                        <li><a href="/alshape/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testMaterialHelp -->
+                        <li><a href="/materials/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testXpaHelp -->
+                        <li><a href="/xpa/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testtroughv1Help -->
+                        <li><a href="/troughv1/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testExtrudeHelp -->
+                        <li><a href="/extrusion/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testBatchQuenchHelp -->
+                        <li><a href="/batchquench/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testSlabThermalHelp -->
+                        <li><a href="/slabthermal/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testLevelerHelp -->
+                        <li><a href="/leveler/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testHotReversingMillHelp -->
+                        <li><a href="/hotreversingmill/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testCoilStressHelp -->
+                        <li><a href="/coilstress/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testCasterHelp -->
+                        <li><a href="/caster/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testBatchFurnaceSheetPlateHelp -->
+                        <li><a href="/batchfurnacesheetplate/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testContinuousFurnacePaintlineHelp -->
+                        <li><a href="/continuousfurnacepaintline/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testContinuousFurnaceConvectiveHelp -->
+                        <li><a href="/continuousfurnaceconvectiveequivagingtime/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testBatchQuenchSheetPlateHelp -->
+                        <li><a href="/batchquenchsheetplate/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testBatchFurnaceSpecTvstHelp -->
+                        <li><a href="/batchfurnacespecifiedtvst/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testbatchfurnaceingotHelp -->
+                        <li><a href="/batchfurnaceingot/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testcontinuousfurnaceinfraredHelp -->
+                        <li><a href="/continuousfurnaceinfrared/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testtrimHelp -->
+                        <li><a href="/trimscalpshearmass/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testFluxingHelp -->
+                        <li><a href="/fluxing/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                        <!-- ko if: $root.testtroughcastingHelp -->
+                        <li><a href="/troughcasting/showVariableTable/" target="_blank">About Variable</a></li>
+                        <!--/ko-->
+                    </ul>
+                </li>
+                <!--/ko-->
+                <!-- ko if: $root.isSpraydesign -->
+                <li class="dropdown" ><a class="dropdown-toggle" data-toggle="dropdown"  href="#">Help<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <!--<li><a href="/media/spraydesign/help/SprayToolbox.chm"><b>Help</b></a></li>-->
+                        <li><a href="/media/spraydesign/help/SprayToolBoxHelp.pdf" download><b>Help</b></a></li>
+                        <li><a href="/discussion/">Discussion Board</a></li>
+                        <li><a href="/spraydesign/showVariableTable/" target="_blank">About Variable</a></li>
+                    </ul>
+                </li>
+                <!--/ko-->
+                {% else %}
+
+                <li><a href="{% url 'register' %}"><b>Sign up</b></a>
+                    <!-- ko ifnot: $root.isSpraydesign -->
+                <li style="display:none;"><a href="#">Help</a></li>
+                <!--/ko-->
+                <!-- ko if: $root.isSpraydesign -->
+                <!--<li style="display:none;"><a href="/media/spraydesign/help/SprayToolbox.chm">Help</a></li>-->
+                <li style="display:none;"><a href="/media/spraydesign/help/SprayToolBoxHelp.pdf" download>Help</a></li>
+                <!--/ko-->
+                {% endif %}
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+{% if user.is_authenticated %}
+<nav id="nvSubHeader" data-bind="visible:$root.masterModel.isSubHeaderVisible" style="background-color: #F2F2F2;min-height:40px;height:40px;" class="navbar ">
+    <div class="container-fluid">
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div id="dvCustomNavbar"  class="collapse navbar-collapse col">
+            <!--**********************populate sub headerss ***************** -->
+            <ul data-bind="foreach:$root.masterModel.subHeaders" class="nav navbar-nav">
+                <!--**********************if sub header has an array of headers ***************** -->
+                <!--ko if:subHeaderArray().length-->
+                <li class="dropdown dropdown-custom" data-bind="click:$root.masterModel.subHeaderClicked.bind()">
+                    <a data-toggle="dropdown" role="button"  data-bind="attr:{href:selectedLink, selectedApplication:name, class:($root.masterModel.subHeader()==name)? 'dropdown-toggle active':'dropdown-toggle'}">
+                        <span data-bind="text:$data.name"></span><span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-application" data-bind="foreach:subHeaderArray">
+                        <li data-bind="click:$root.masterModel.applicationSelected.bind($data,$parent.name)">
+                            <a data-bind="attr:{href:link}, text:name" href="#">
+
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!--/ko-->
+                <!--ko if:!subHeaderArray().length-->
+                <li data-bind="click:$root.masterModel.subHeaderClicked.bind()"><a data-toggle="dropdown" role="button"  data-bind="attr:{href:link, class:($root.masterModel.subHeader()==name)? 'active':''}"><span data-bind="text:name"></span></a>
+                </li>
+                <!--/ko-->
+            </ul>
+            <!--*****************************Specific to alshape view********************************-->
+            <ul data-bind="if:($root.isAlshape)" class="nav navbar-nav navbar-right">
+
+
+
+
+
+                <!--ko with:$root.skeleton -->
+                <li class="dropdown ">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">File <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <!--ko if:selectedFileName -->
+                        <li><a style="color: dodgerblue;" data-bind="text:selectedFileName"></a></li>
+                        <li class="divider"></li>
+                        <!--/ko-->
+                        <li data-bind="click:fileUploadClicked"><a href="#">Load Data File</a></li>
+                        <li><a href="#" data-bind="visible:exportEnable,click:$root.model.exportToTextFile">Export To Text File</a></li>
+
+
+
+
+                    </ul>
+                </li>
+                <li data-bind="visible:selectedFileName()" class="dropdown ">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">Actions <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li  data-bind="click:$root.model.runModel.bind($data,1)">
+                            <a  href="#">
+
+                                Run Model and Save
+
+                            </a>
+                        </li>
+                        <li   data-bind="click:$root.model.runModel.bind($data,2)">
+                            <a  href="#">
+
+                                Run Model and Save As
+
+                            </a>
+                        </li>
+                        <li>
+                            <a data-bind="click:$root.model.convertUnit, text:$root.model.currentUnit()==1?'English Unit (Click to convert)':'Metric Unit (Click to convert)'" href="#">
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </li>
+
+
+
+                <!--/ko-->
+            </ul>
+            <!--*****************************Specific to alshape view ends********************************-->
+
+            <!--*****************************Specific Multisim View********************************-->
+            <!--ko if:$root.isMultisim -->
+            <div data-bind="visible: $root.enableSaveAs" class="btn-group pull-right" style="display:none">
+                <li class="btn" data-bind="visible:$root.enableSave,click:$root.saveDetailsWithoutRunmodel.bind($data,2)">Save</li>
+                <li class="btn" data-bind="visible:$root.enableSaveAs,click:$root.saveDetailsWithoutRunmodel.bind($data,1)">Save As</li>
+
+                <li class="btn" data-bind="visible:!($root.isProcess),click:$root.runModel.bind($data,2)">Run Multisim</li>
+            </div>
+            {#    <ul class="nav navbar-nav navbar-right">#}
+            {#        <li class="dropdown ">#}
+                {#            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Action <b class="caret"></b></a>#}
+                {#            <ul class="dropdown-menu">#}
+                    {#                <li data-bind="visible:$root.enableSave,click:$root.saveDetailsWithoutRunmodel.bind($data,2)"><a href="#">Save</a></li>#}
+                    {#                <li data-bind="visible:$root.enableSaveAs,click:$root.saveDetailsWithoutRunmodel.bind($data,1)"><a href="#">Save As</a></li>#}
+                    {#                <!--<li data-bind="click:$root.runMultisim"><a href="#">Run Multisim</a></li>-->#}
+                    {#                <li data-bind="visible:!($root.isProcess),click:$root.runModel.bind($data,2)"><a href="#">Run Multisim</a></li>#}
+                    {#                <!--<li data-bind="click:$root.runModel.bind($data,2)"><a href="#">Run Model and Save</a></li>-->#}
+                    {#                <!--<li data-bind="click:$root.runModel.bind($data,1)"><a href="#">Run Model and Save As</a></li>-->#}
+                    {#            </ul>#}
+                {#        </li>#}
+            {#    </ul>#}
+            <!--/ko-->
+            <!--*****************************Specific to Multisim View ends********************************-->
+
+            <!--***********  specific to Auto Heat Transfer****************************-->
+
+            <!--ko if:$root.isAutoht && $root.isAutoht1-->
+            <ul class="nav navbar-nav navbar-right">
+                <!--ko if:$root.isAutoht1 -->
+                <div class="btn-group pull-left" >
+
+                    <li style="display:none;padding: 0px;
+    padding-top: 6px;
+    margin-right: 15px;" class="btn" data-bind="click:$root.showLoadFileOption,visible:$root.isAutoht1">LoadFile</li>
+                    <li style="display:none;padding: 0px;
+    padding-top: 6px;" class="btn" data-bind="visible:$root.inputDataAvailable,click:$root.runModel">Run Model</li>
+                </div>
+                <!--/ko-->
+
+                <li class="dropdown pull-right">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">Action <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        {#                <li data-bind="click:$root.showLoadFileOption"><a href="#">LoadFile</a></li>#}
+                        {#                <li data-bind="visible:$root.inputDataAvailable,click:$root.runModel"><a href="#">Run Model</a></li>#}
+                        <li data-bind="click:$root.runModelforMultisim"><a href="#">Start Multisim</a></li>
+                        <li data-bind="visible:$root.inputDataAvailable, click:$root.exportInputToTextFile"><a href="#">Export Input Data File</a></li>
+                        <!--ko if: $root.outputAvailable -->
+                        <li data-bind="click:$root.exportOutputToTextFile"><a href="#">Export Output Data File</a></li>
+                        <!--/ko-->
+                    </ul>
+                </li>
+
+
+            </ul>
+
+            <!--/ko-->
+            <!--***********  specific to Auto Heat Transfer ends ****************************-->
+
+            <!--*****************************if not alshape view and autoht view********************************-->
+            <!--*****************************the check for $root.masterModel.actionVisible() is to make sure this section is not loaded for index pages..********************************-->
+            {#    <!--ko if :  $root.plateStretchTopBar ||$root.xpatop || $root.test ||$root.extrudeTopBar  || $root.coilthermalTopBar  || $root.RmillTopBar || $root.batchFurnaceTopBar  || $root.quechTopBar  || $root.contiFurTopBar  -->#}
+            {#    <div class="btn-group btn-group-sm" style="padding: 0px;padding-top:3px;position:relative;margin-left: 170px">#}
+            {#        <button class="btn" data-bind="visible:(!$root.linkageView || !$root.linkageView()) & $root.multisimAlterView(),click:$root.runModel.bind($data,1)">Run Model and Save As</button>#}
+            {#        <button class="btn "  data-bind="visible:((!$root.linkageView || !$root.linkageView() || $root.processInputVisible)) & $root.multisimAlterView(), click:$root.runMultisim.bind($data,2)">Start Multisim</button>#}
+            {#    </div>#}
+            {#    <!--/ko-->#}
+
+            <ul data-bind="if:($root.masterModel.actionVisible() && !($root.isAlshape) && !($root.isAutoht) && !($root.isMultisim))" class="nav navbar-nav navbar-right pull-right">
+                <!--ko if :  $root.testPlate || $root.testCoil || $root.testRoll || $root.testbatchFurnace || $root.testQuench || $root.furnace ||$root.testxpa || $root.testSpray || $root.testExtrude || $root.testBatchQuench || $root.testSlabThermal || $root.testHotReversingMill || $root.testCoilStress || $root.testLeveler || $root.testFluxing || $root.testCaster -->
+                <div class="btn-group pull-left">
+                    <!--ko if :$root.checkCreator()-->
+                    <li style="display:none;padding: 0px;
+    padding-top: 7px;
+    margin-right: 12px;
+"
+                        class="btn" data-bind="visible:(!$root.linkageView || !$root.linkageView()) & $root.multisimAlterView(),click:$root.runModel.bind($data,1)">Run Model and Save As</li>
+                    <!--/ko-->
+                    <!--ko ifnot:$root.checkCreator()-->
+                    <li  style="display:none;padding: 0px;
+    padding-top: 7px;
+    margin-right: 12px;
+"
+                         class="btn"data-bind="visible:((!$root.linkageView || !$root.linkageView()) && (!$root.checkCreator())) & $root.pageType =='Input' & $root.multisimAlterView(), click:$root.runModel.bind($data,2)">
+                        Run Model and Save
+                    </li>
+
+                    <!--/ko-->
+                    <li style="display:none;padding: 0px;
+    padding-top: 7px" class="btn "  data-bind="visible:((!$root.linkageView || !$root.linkageView() || $root.processInputVisible)) & $root.multisimAlterView(), click:$root.runMultisim.bind($data,2)">Start Multisim</li>
+                </div>
+                <!--/ko-->
+
+                {#        <!--ko if:$root.masterModel.linkagePage-->#}
+                {#        <div class="btn-group pull-left">#}
+                {#            <li data-bind="click:$root.changeLinkView,text:$root.isLinkageView()?'Back':'Link to flow path'"  href="#"></li>#}
+                {#            <li data-bind="click:$root.resetLinkages" href="#">Reset</li>#}
+                {#        </div>#}
+                {#        <!--/ko-->#}
+
+
+                <!--ko if:$root.masterModel.linkagePage-->
+                <div class="btn-group pull-left">
+                    <li style="display:none;padding: 0px;
+    padding-top: 6px;
+    margin-right: 14px" class="btn" data-bind="visible:$root.isLinkageView, click:$root.runLinkage"> Run Linkage</li>
+                    <li style="display:none ;     padding: 0px;
+    padding-top: 6px;"class="btn" data-bind="visible:$root.isLinkageView, click:$root.runLinkageMultisim"> Start Multisim</li>
+                    <li style="display:none"class="btn"  data-bind="click:$root.resetLinkages,visible:$root.resetVisibility">Reset</li>
+                    <li style="display:none"class="btn" data-bind="click:$root.changeLinkView,visible:$root.resetVisibility, text:$root.isLinkageView()?'Back':'Link to flow path'"></li>
+
+
+                </div>
+                <!--/ko-->
+                <!--ko if:$root.masterModel.materialPage-->
+                <div class="btn-group pull-left">
+                    <li style="display:none;padding: 0px;
+    padding-top: 6px;
+    margin-right: 15px;" class="btn" data-bind="click: $root.applyMaterialsData, visible:$root.testLinkage1" >Update</li>
+                    <li style="display:none;padding: 0px;
+    padding-top: 6px;" class="btn" data-bind="click:$root.runModel,visible:$root.testLinkage1" >Run Model</li>
+
+                </div>
+                <!--/ko-->
+                <!--ko if :$root.testLinkage1() || $root.testLinkage2()-->
+
+
+                <li class="dropdown active pull-right"><a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#"><b>Action</b><span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <!--***********  Specific to material page****************************-->
+
+                        <!--ko if:$root.masterModel.materialPage-->
+
+                        {#                <li data-bind="click: $root.applyMaterialsData" ><a  href="#">Update</a></li>#}
+                        {#                <li data-bind="click:$root.runModel" ><a href="#">Run Model</a></li>#}
+                        <li data-bind="click:$root.runMultisim"><a href="#">Start Multisim</a></li>
+                        <li data-bind="click:$root.renameAlloy" ><a href="#">Save as New Alloy</a></li>
+                        <li><a data-bind="click:$root.convertUnit, text:$root.currentUnit()==1?'English Unit (Click to convert)':'Metric Unit (Click to convert)'" href="#"></a></li>
+                        <!--/ko-->
+                        <!--***********  Specific to material page ends****************************-->
+
+                        <!--ko if:!$root.masterModel.materialPage()-->
+                        <!--***********  Specific to Linkage page****************************-->
+                        <!--ko if:$root.masterModel.linkagePage-->
+                        <li ><a data-bind="click:$root.changeLinkView,text:$root.isLinkageView()?'Back':'Link to flow path'"  href="#"></a></li>
+                        {#                <li data-bind="visible:$root.isLinkageView">#}
+                        {#                    <a data-bind="click:$root.runLinkage" href="#">#}
+                            {##}
+                            {#                        Run Linkage#}
+                            {##}
+                            {#                    </a>#}
+                        {#                </li>#}
+                        {#                <li data-bind="visible:$root.isLinkageView">#}
+                        {#                    <a data-bind="click:$root.runLinkageMultisim" href="#">#}
+                            {##}
+                            {#                        Start Multisim#}
+                            {##}
+                            {#                    </a>#}
+                        {#                </li>#}
+                        {##}
+                        <li ><a data-bind="click:$root.resetLinkages" href="#">Reset</a></li>
+                        <li ><a data-bind="click:$root.showHistogram,visible:$root.isLinkageView" href="#">Histogram</a></li>
+                        <!--<li ><a  href="graphsim.html">Process</a></li>-->
+
+                        <!--/ko-->
+                        <!--***********  Specific to Linkage page ends****************************-->
+                        <!--ko if:!$root.masterModel.linkagePage()-->
+                        <!--***********  Specific to rollingmill template page section****************************-->
+                        <!--ko if:$root.templateView-->
+                        <li data-bind="visible:$root.templatePageType()!='Index',click:$root.saveTemplate">
+                            <a  href="#">
+
+                                Save Template
+
+                            </a>
+                        </li>
+
+                        <li data-bind="click:$root.hideTemplateView"><a  href="#">Go To Process</a></li>
+                        <li data-bind="click:$root.populateManageTemplatePage,visible: ($root.masterModel.showManageTemplate) && !($root.linkageView())"><a href="#">Manage Template</a></li>
+                        <!--/ko-->
+                        <!--***********  Specific to rollingmill template page section ends****************************-->
+                        <!--***********  Default view for most of application ****************************-->
+                        <!--ko if:(!$root.templateView ||!$root.templateView()) -->
+                        <!--<li data-bind="visible:((!$root.linkageView || !$root.linkageView()) && (!$root.checkCreator())) & $root.pageType =='Input', click:$root.saveDetailsWithoutRunmodel.bind($data,2)">
+                                    <a href="#">Save</a>
+                                </li>-->
+                        <li data-bind="visible:((!$root.linkageView || !$root.linkageView()) && (!$root.checkCreator())) &&($root.multisimAlterView) , click:$root.saveDetailsWithoutRunmodel.bind($data,2)">
+                            <a href="#">Save</a>
+                        </li>
+                        <!--<li data-bind="visible:((!$root.linkageView || !$root.linkageView()) && (!$root.checkCreator())) &(!$root.multisimAlterView()), click:$root.updateLinkageDataMultisim">-->
+                        <li data-bind="visible:((!$root.linkageView || !$root.linkageView()) ) &(!$root.multisimAlterView()), click:$root.updateLinkageDataMultisim">                            <a href="#">Save Multisim Data</a>
+                        </li>
+                        <li data-bind="visible:(!$root.linkageView || !$root.linkageView()) &&($root.multisimAlterView),click:$root.saveDetailsWithoutRunmodel.bind($data,1)">
+                            <a  href="#">Save As</a>
+                        </li>
+                        {#                <li data-bind="visible:((!$root.linkageView || !$root.linkageView()) && (!$root.checkCreator())) & $root.pageType =='Input' & $root.multisimAlterView(), click:$root.runModel.bind($data,2)">#}
+                        {#                    <a  href="#">Run Model and Save</a>#}
+                        {#                </li>#}
+                        <li data-bind="visible:((!$root.linkageView || !$root.linkageView()) && (!$root.checkCreator())) & $root.multisimAlterView(),click:$root.runModel.bind($data,1)"><a  href="#">Run Model and Save As</a></li>
+                        <li data-bind="visible:$root.linkageView  && ( $root.linkageView() &($root.processInputVisible ||$root.productInputVisible)) & $root.multisimAlterView(),click:$root.updateLinkageData"><a  href="#">Save Linkage Data</a></li>
+                        <li><a data-bind="click:$root.convertUnit, text:$root.currentUnit()==1?'English Unit (Click to convert)':'Metric Unit (Click to convert)'" href="#"></a></li>
+                        <!--<li data-bind="visible:(!$root.linkageView || !$root.linkageView() || $root.processInputVisible), click:$root.equipmentSelected"><a href="#">Equipment</a></li>-->
+                        {#                <li data-bind="visible:((!$root.linkageView || !$root.linkageView() || $root.processInputVisible)) & $root.multisimAlterView(), click:$root.runMultisim.bind($data,2)"><a href="#">Start Multisim</a></li>#}
+                        <li data-bind="click:$root.populateManageTemplatePage,visible:($root.masterModel.showManageTemplate) && (!$root.linkageView | !$root.linkageView())& $root.multisimAlterView()"><a href="#">Manage Template</a></li>
+                        {% comment %}<li data-bind="click:$root.exportToTextFile,visible:$root.isXPA"><a href="#">Export Data File</a></li>{% endcomment %}
+                        <!--ko if :  ($root.testbatchFurnace || $root.testQuench || $root.furnace ||$root.testxpa || $root.testBatchQuench) && (!$root.linkageView()) -->
+                        <li data-bind="click:$root.exportToTextFile"><a href="#">Export Data File</a></li>
+                        <!-- /ko -->
+                        <li data-bind="click:$root.resetData,visible:$root.isXPA"><a href="#">Reset Data</a></li>
+                        <!--***********  Default view for most of application ends ****************************-->
+
+                        <!--/ko-->
+                        <!--/ko-->
+                        <!--/ko-->
+
+                    </ul>
+                </li>
+                <!--/ko-->
+
+            </ul>
+            <!--*****************************if not alshape view and autoht view ends********************************-->
+            {% endif %}
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div id="notificationModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm" style="width:300px;margin-top:100px;">
+        <div class="modal-content" style="width:500px">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Notifications</h4>
+            </div>
+            <div class="modal-body" style="overflow-y:auto;height:200px">
+                <!-- ko if:notificationmsgarray().length!=0-->
+                <!-- ko foreach:notificationmsgarray()-->
+                <div class="well well-sm" style="font-size: medium" data-bind='style:{"background-color":$data.read_flag==0?"antiquewhite":" "}'><a data-bind="text:$data.notificationmsg,attr:{href:$data.currentapp!='Alshape'? $data.notificationurl:'/alshape/'}"></a></div>
+                <!-- /ko-->
+                <!-- /ko-->
+                <!-- ko if:notificationmsgarray().length==0-->
+                <div>No notifications</div>
+                <!-- /ko-->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-default" id="cleardata" data-dismiss="modal">Clear Notifications</button>
+            </div>
+        </div>
+    </div>
+</div>
